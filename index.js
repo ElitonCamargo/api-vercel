@@ -7,7 +7,7 @@ const app = express();
 app.get('/',(req,res)=>{
     res.json({"status": "Server OK"});
 })
-app.get('/veiculo',(req,res)=>{
+app.get('/veiculos',(req,res)=>{
     res.json(veiculos);
 })
 
