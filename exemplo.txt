@@ -1,0 +1,64 @@
+** Instalações  *************************
+npm install cors
+npm install mysql2
+
+
+** config/data_base.js ************************** 
+
+const db_config = {
+    host: "100.26.59.163",
+    port: 3306,
+    name: "api_sg_qui_dev",
+    dialect: "mysql",
+    user: "admin_api",
+    password: "%gt&j7&gfE0u1895"
+};
+
+export default db_config;
+
+
+
+** database/data.js ************************** 
+import mysql from 'mysql2/promise';
+import db_config from "../config/data_base.js";
+
+const pool = mysql.createPool({
+    host: db_config.host,
+    user: db_config.user,
+    database: db_config.name,
+    password: db_config.password,
+    waitForConnections: true, //Se deve ou não esperar por uma conexão disponível quando o limite de conexões for atingido.
+    connectionLimit: 10, //O número máximo de conexões simultâneas permitidas no pool.
+    queueLimit: 10 //O número máximo de consultas que podem ficar na fila de espera quando todas as conexões estão ocupadas.
+});
+
+export default pool;
+
+models/Rota.js
+import pool from '../database/data.js';
+
+** Exemplo *************************************
+export const cadastrar = async (projeto={},loginId=0) => {    
+    try {       
+        const cmdSql = `INSERT INTO **** (${campos}) VALUES (${dados});`;        
+        const cx = await pool.getConnection();
+        await cx.query(cmdSql, valores);
+
+        const [result] = await cx.query('SELECT LAST_INSERT_ID() as lastId');
+        const lastId = result[0].lastId;
+
+        const [dados, meta_dados] = await cx.query('SELECT * FROM ***** WHERE id = ?;', [lastId]);
+        cx.release();
+        return dados;
+    } catch (error) {
+        throw error;
+    }
+};
+
+>config
+>database
+>models
+>controllers
+>view
+>routes
+index.js
